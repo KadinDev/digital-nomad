@@ -1,0 +1,225 @@
+GIT
+Quando criado um projeto o expo já trás o git, então basta criar o repositório no github
+e usar o git clone em diante
+
+*   *   *   *   *   *   
+- Formatador de código
+Extensão Prettier - Code formatter
+https://prettier.io/?_gl=1*iptwjo*_ga*MTk4MjE4NTQyOS4xNzMyMTUxMzA3*_ga_37GXT4VGQK*czE3NDgyNzA2NDkkbzQzJGcxJHQxNzQ4Mjc0NzYzJGowJGwwJGgw
+
+vai em Settings do VSCode, digita defaultFormatter, e em Editor: Default Formatter seleciona o Prettier.
+
+agora digita onSave, em Editor: Format On Save, marca o checkbox.
+e em Editor: Format On Save Mode, deixa como file
+
+
+*   *   *   *   *   *   
+
+
+ANTES DE COMEÇAR O PROJETO LIMPEI OS ARQUIVOS, DEIXANDO PADRÕES MESMO:
+arquivos:
+    +not-found.tsx
+
+    import { Stack } from "expo-router";
+
+    export default function NotFoundScreen() {
+    return (
+        <>
+        <Stack.Screen options={{ title: "Oops!" }} />
+        </>
+    );
+    }
+
+    *
+
+    _layout.tsx / da pasta app:
+    
+    import { useFonts } from "expo-font";
+    import { Stack } from "expo-router";
+    import { StatusBar } from "expo-status-bar";
+    import "react-native-reanimated";
+
+    export default function RootLayout() {
+    const [loaded] = useFonts({
+        SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    });
+
+    if (!loaded) {
+        // Async font loading only occurs in development.
+        return null;
+    }
+
+    return (
+        <Stack>
+        <Stack.Screen name="(protected)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="sign-in" />
+        <StatusBar style="auto" />
+        </Stack>
+    );
+    }
+
+    *
+
+    _layout.tsx da pasta (protected)
+
+    import { Redirect, Stack } from "expo-router";
+
+    const isSignIn = false;
+
+    export default function ProtectedLayout() {
+    if (isSignIn) {
+        return <Redirect href="/sign-in" />;
+    }
+    return (
+        <Stack
+        screenOptions={{
+            headerShown: false,
+            fullScreenGestureEnabled: true, // arrastar a tela para voltar
+        }}
+        >
+        <Stack.Screen name="(Tab)" />
+        </Stack>
+    );
+    }
+
+    *
+
+    _layout.tsx da pasta (tabs)
+
+    import { Tabs } from "expo-router";
+    import React from "react";
+    import { Platform } from "react-native";
+
+    export default function TabLayout() {
+    return (
+        <Tabs
+        screenOptions={{
+            tabBarStyle: Platform.select({
+            ios: {
+                // Use a transparent background on iOS to show the blur effect
+                position: "absolute",
+            },
+            default: {},
+            }),
+        }}
+        >
+        <Tabs.Screen
+            name="index"
+            options={{
+            title: "Home",
+            }}
+        />
+        <Tabs.Screen
+            name="explore"
+            options={{
+            title: "Explore",
+            }}
+        />
+        </Tabs>
+    );
+    }
+
+
+
+
+*   *   *   *   *   *   
+
+Lib Shopify
+npm install @shopify/restyle
+
+Doc Lib Shopify
+https://shopify.github.io/restyle/?_gl=1*1afmcmb*_ga*MTk4MjE4NTQyOS4xNzMyMTUxMzA3*_ga_37GXT4VGQK*czE3NDg0NTc0ODkkbzUzJGcxJHQxNzQ4NDU5NDYxJGo2MCRsMCRoMA..#installation
+
+*   *   *   *   *   *   
+
+
+para os icones, baixar do Figma e enviar para o site, seleciona eles no site
+e clica em Generate Font, depois em Download. vamos precisar somente do selection.json,
+icomoon.ttf
+ 
+icomoon.io
+https://icomoon.io/app/#/select
+
+
+******************************
+Animações
+
+Easing Functions
+https://easings.net/?_gl=1*18fwyv4*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NTA0NTg5OTEkbzQxJGcxJHQxNzUwNDU4OTkxJGo2MCRsMCRoMA..#
+
+******************************
+
+Mapas
+https://docs.expo.dev/versions/latest/sdk/map-view/?_gl=1*1gysy8d*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NTA0NTg5OTEkbzQxJGcxJHQxNzUwNDYyNDgxJGo1MSRsMCRoMA..
+
+npx expo install react-native-maps
+
+
+*********************
+    Reactotron para Debug
+
+https://docs.infinite.red/reactotron/quick-start/react-native/?_gl=1*1gwmhi7*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NTI4ODQxMDYkbzc2JGcxJHQxNzUyODg2MDc1JGo2MCRsMCRoMA..
+
+Baixar o programa:
+https://github.com/infinitered/reactotron/releases/tag/reactotron-app%403.7.7
+
+agora a 2° etapa:
+npm i --save-dev reactotron-react-native
+
+e cria o arquivo: ReactotronConfig.js na raiz do projeto:
+    
+    import Reactotron from "reactotron-react-native";
+
+    Reactotron.configure() // controls connection & communication settings
+    .useReactNative() // add all built-in react native plugins
+    .connect(); // let's connect!
+
+e em app / _layout.tsx (pois esse é o nosso index):
+    if (__DEV__) {
+    require("../ReactotronConfig");
+    }
+
+Mas sempre fazer seguindo a documentação
+*********************
+
+
+
+GOOGLE MAPS ANDROID - AULA 9 - MOD 10
+https://docs.expo.dev/versions/latest/sdk/map-view/?_gl=1*93he5a*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NTY2ODc1ODkkbzEyMiRnMSR0MTc1NjY4NzU5NCRqNTUkbDAkaDA.#add-the-api-key-to-your-project
+
+
+
+ZOD
+https://zod.dev/?_gl=1*1xrd930*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NjgyMzg2MTkkbzE4NCRnMSR0MTc2ODI0MzI0MyRqNjAkbDAkaDA.
+
+React Hook Form
+https://react-hook-form.com/?_gl=1*10bu73*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NjgyMzg2MTkkbzE4NCRnMSR0MTc2ODI0MzI0MyRqNjAkbDAkaDA.
+
+npm i @hookform/resolvers
+
+
+
+
+
+****************************
+TESTES
+
+https://docs.expo.dev/develop/unit-testing/?_gl=1*1k08au6*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NzAwNzM5OTEkbzIwOCRnMSR0MTc3MDA3NDExMiRqNjAkbDAkaDA.
+npx expo install jest-expo jest @types/jest --dev
+
+  "scripts": {
+    "teste": "jest --verbose"
+  },
+
+"jest": {
+    "preset": "jest-expo"
+  },
+
+Antes de instalar a React Native Testing Library, instale o react-test-renderer, na mesma versão que seu projeto está no React(veja no package.json)
+    no meu projeto o React estava na versão 19.0.0, mas o pacote react-test-renderer exige react ^19.2.4
+
+Então atualizei e instalei o testing library
+    npm install react@^19.2.4 react-test-renderer@^19.2.4
+    npm install -D @testing-library/react-native
+
