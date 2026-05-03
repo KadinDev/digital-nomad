@@ -208,6 +208,13 @@ TESTES
 https://docs.expo.dev/develop/unit-testing/?_gl=1*1k08au6*_ga*MTE0MDU4NzE5Mi4xNzQ5MDUxNTMx*_ga_37GXT4VGQK*czE3NzAwNzM5OTEkbzIwOCRnMSR0MTc3MDA3NDExMiRqNjAkbDAkaDA.
 npx expo install jest-expo jest @types/jest --dev
 
+JEST
+https://jestjs.io/docs/29.7/getting-started
+
+RNTL
+https://oss.callstack.com/react-native-testing-library/docs/start/quick-start
+
+
   "scripts": {
     "teste": "jest --verbose"
   },
@@ -217,9 +224,14 @@ npx expo install jest-expo jest @types/jest --dev
   },
 
 Antes de instalar a React Native Testing Library, instale o react-test-renderer, na mesma versão que seu projeto está no React(veja no package.json)
-    no meu projeto o React estava na versão 19.0.0, mas o pacote react-test-renderer exige react ^19.2.4
+    
+Então instalei:
+    npm i -D react-test-renderer@19.1.0   ( exatamente na versão do meu React no package.json 19.1.0 )
+    npm i -D @testing-library/react-native
 
-Então atualizei e instalei o testing library
-    npm install react@^19.2.4 react-test-renderer@^19.2.4
-    npm install -D @testing-library/react-native
+OBS: Detalhe importante e erro resolvido. quando instalei o react-test-renderer ele estava vindo com a: ^ ficando assim:
+    @^19.1.0
+Isso não estava deixando o @testing-library/react-native instalar pois preciso exatamente deixar na versão do meu React nesse projeto, 19.1.0.
 
+No package.json removi o ^ deixando assim: "react-test-renderer": "19.1.0", e dei um npm install, depois segui normalmente instalando o 
+    npm i -D @testing-library/react-native
